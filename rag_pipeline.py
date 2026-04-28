@@ -8,7 +8,7 @@ import pandas as pd
 
 # CONFIG 
  
-HF_DATASET_NAME = "dralsarrani/prompt_safety_with_synthetic"  
+HF_DATASET_NAME = "dralsarrani/prompt_safety_with_synthetic_labeled"  
 EMBEDDING_MODEL  = "all-MiniLM-L6-v2"   # fast, free, good enough
 CHROMA_DIR       = "./chroma_db"         # local folder, created automatically
 COLLECTION_NAME  = "safety_prompts"
