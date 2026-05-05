@@ -144,6 +144,15 @@ Try it live, no setup needed:>
 
 ---
 
+## 🔮 Future Work
+
+- [ ] **Category filtering** let users test for specific threat types only (e.g. jailbreaks only)
+- [ ] **PDF export** one-click downloadable safety report
+- [ ] **Multilingual support** extend the dataset and evaluation to Arabic and other languages
+- [ ] **API endpoint** expose the evaluator as a REST API so developers can integrate it into their own pipelines
+
+---
+
 ## Author
 
 **Danah Al-Sarrani**
