@@ -1,6 +1,6 @@
 # 🛡️ PromptGuard — LLM Prompt Safety Evaluator
 
-> Detect unsafe prompts before they reach your LLM — powered by RAG retrieval and an AI judge trained on 181K labeled prompts.
+> Detect unsafe prompts before they reach your LLM powered by RAG retrieval and an AI judge, Used 181K labeled prompts.
 
 [![Live Demo](https://img.shields.io/badge/🤗%20Live%20Demo-HuggingFace%20Spaces-blue)](https://huggingface.co/spaces/dralsarrani/PromptGuard)
 [![Dataset](https://img.shields.io/badge/🤗%20Dataset-181k%20Prompts-yellow)](https://huggingface.co/datasets/dralsarrani/Prompt-Aggregation-Dataset-Custom-Dataset)
