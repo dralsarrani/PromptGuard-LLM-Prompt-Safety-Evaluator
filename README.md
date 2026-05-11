@@ -18,25 +18,41 @@ Unlike simple keyword filters or basic classifiers, PromptGuard uses a **RAG + L
 
 ---
 
-## How It Works
+## 🏗️ Architecture
 
 ```
 User Prompt
      │
      ▼
-┌─────────────────────────────┐
-│   RAG Retrieval (ChromaDB)  │  ← finds top 5 similar prompts from 181k dataset
-└─────────────────────────────┘
+┌─────────────────────────────────────────┐
+│   Embedding Layer                       │
+│   all-MiniLM-L6-v2 (sentence-transformers) │
+└─────────────────────────────────────────┘
      │
      ▼
-┌─────────────────────────────┐
-│     LLM Judge (via API)     │  ← evaluates safety using retrieved context
-└─────────────────────────────┘
+┌─────────────────────────────────────────┐
+│   ChromaDB Vector Store                 │
+│   181k labeled prompts · 5 categories  │
+│   Retrieves top-5 similar prompts       │
+└─────────────────────────────────────────┘
      │
      ▼
-┌─────────────────────────────┐
-│     Structured Verdict      │  ← verdict + confidence + category + reasoning
-└─────────────────────────────┘
+┌─────────────────────────────────────────┐
+│   LLM Judge (OpenRouter API)            │
+│   Reasons through prompt + context      │
+└─────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────┐
+│   Structured Verdict (JSON)             │
+│   ✓ Safe / Unsafe                       │
+│   ✓ Threat category                     │
+│   ✓ Confidence score                    │
+│   ✓ Plain-English reasoning             │
+└─────────────────────────────────────────┘
+     │
+     ▼
+Gradio UI · HuggingFace Spaces
 ```
 
 **Step 1 — Embedding & Retrieval**
