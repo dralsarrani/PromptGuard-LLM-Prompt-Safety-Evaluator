@@ -8,6 +8,12 @@
 
 ![PromptGuard UI](PromptGuard.gif)
 
+>  **Demo Limitation**
+> This live demo runs on a subset of **50K prompts** (out of the full 181K)
+> due to HuggingFace Spaces storage constraints.
+> Results are still representative, but for full accuracy and coverage,
+> clone the repo locally from GitHub and run it with the complete dataset.
+> it will work out of the box with no changes needed.
 ---
 
 ## What is PromptGuard?
