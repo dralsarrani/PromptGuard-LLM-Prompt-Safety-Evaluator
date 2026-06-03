@@ -172,7 +172,6 @@ Try it live, no setup needed:>
 ## Author
 
 **Danah Al-Sarrani**
-AI Engineer | LLM & GenAI
 
 [![HuggingFace](https://img.shields.io/badge/🤗-dralsarrani-yellow)](https://huggingface.co/dralsarrani)
 [![GitHub](https://img.shields.io/badge/GitHub-dralsarrani-black)](https://github.com/dralsarrani)
