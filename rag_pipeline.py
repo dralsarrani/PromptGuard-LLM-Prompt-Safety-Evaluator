@@ -1,6 +1,3 @@
-#pip install datasets sentence-transformers chromadb pandas
-
- 
 from datasets import load_dataset
 from sentence_transformers import SentenceTransformer
 import chromadb
@@ -20,7 +17,7 @@ TOP_K            = 5                     # how many similar prompts to retrieve
  
 def load_safety_dataset():
     print("Loading dataset from HuggingFace...")
-    dataset = load_dataset(HF_DATASET_NAME, cache_dir="./hf_cache", download_mode="force_redownload")
+    dataset = load_dataset(HF_DATASET_NAME, cache_dir="./hf_cache")
     df = dataset["train"].to_pandas()
  
     # Normalise column names to lowercase
@@ -28,7 +25,7 @@ def load_safety_dataset():
  
     # Keep only rows with valid prompt + label
     df = df.dropna(subset=["text", "label"])
-    df = df[df["label"].isin([1.0, 0.0])]
+    df = df[df["label"].isin(["safe", "unsafe"])]
     df = df.reset_index(drop=True)
  
     print(f"  Loaded {len(df)} rows  |  SAFE: {(df.label==0).sum()}  UNSAFE: {(df.label==1).sum()}")
@@ -41,10 +38,13 @@ def build_vector_store(df: pd.DataFrame):
     print("Building vector store...")
     model  = SentenceTransformer(EMBEDDING_MODEL)
     client = chromadb.PersistentClient(path=CHROMA_DIR)
- 
-    # Delete existing collection so we start fresh on rebuild
+
+    # Check if already built — skip if so
     try:
-        client.delete_collection(COLLECTION_NAME)
+        collection = client.get_collection(COLLECTION_NAME)
+        if collection.count() > 0:
+            print(f"  Vector store already exists ({collection.count()} vectors). Skipping rebuild.")
+            return collection, model
     except Exception:
         pass
  
@@ -116,7 +116,13 @@ def load_vector_store():
     """Load an already-built Chroma store without re-embedding."""
     model      = SentenceTransformer(EMBEDDING_MODEL)
     client     = chromadb.PersistentClient(path=CHROMA_DIR)
-    collection = client.get_collection(COLLECTION_NAME)
-    print(f"Loaded existing vector store ({collection.count()} vectors)")
+    
+    try:
+        collection = client.get_collection(COLLECTION_NAME)
+        print(f"Loaded existing vector store ({collection.count()} vectors)")
+    except Exception:
+        print("No existing vector store found — building from scratch...")
+        df = load_safety_dataset()
+        collection, model = build_vector_store(df)
+        
     return collection, model
- 
